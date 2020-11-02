@@ -78,7 +78,7 @@ class UserAuthentificatorAuthenticator extends AbstractFormLoginAuthenticator im
             throw new CustomUserMessageAuthenticationException('Email could not be found.');
         }
 
-        $session->set('test', $user);
+        $session->set('user', $user);
         $session->set('isAuth', true);
         return $user;
     }

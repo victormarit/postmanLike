@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\APIRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -36,6 +38,16 @@ class API
      * @ORM\Column(type="string", length=255)
      */
     private $methode;
+
+    /**
+     * @ORM\OneToMany(targetEntity=UserRequestAPI::class, mappedBy="api_id", orphanRemoval=true)
+     */
+    private $userRequestAPIs;
+
+    public function __construct()
+    {
+        $this->userRequestAPIs = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -86,6 +98,36 @@ class API
     public function setMethode(string $methode): self
     {
         $this->methode = $methode;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|UserRequestAPI[]
+     */
+    public function getUserRequestAPIs(): Collection
+    {
+        return $this->userRequestAPIs;
+    }
+
+    public function addUserRequestAPI(UserRequestAPI $userRequestAPI): self
+    {
+        if (!$this->userRequestAPIs->contains($userRequestAPI)) {
+            $this->userRequestAPIs[] = $userRequestAPI;
+            $userRequestAPI->setApiId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserRequestAPI(UserRequestAPI $userRequestAPI): self
+    {
+        if ($this->userRequestAPIs->removeElement($userRequestAPI)) {
+            // set the owning side to null (unless already changed)
+            if ($userRequestAPI->getApiId() === $this) {
+                $userRequestAPI->setApiId(null);
+            }
+        }
 
         return $this;
     }

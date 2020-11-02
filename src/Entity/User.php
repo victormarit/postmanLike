@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -45,6 +47,16 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=255)
      */
     private $firstname;
+
+    /**
+     * @ORM\OneToMany(targetEntity=UserRequestAPI::class, mappedBy="user_id", orphanRemoval=true)
+     */
+    private $userRequestAPIs;
+
+    public function __construct()
+    {
+        $this->userRequestAPIs = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -144,6 +156,36 @@ class User implements UserInterface
     public function setFirstname(string $firstname): self
     {
         $this->firstname = $firstname;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|UserRequestAPI[]
+     */
+    public function getUserRequestAPIs(): Collection
+    {
+        return $this->userRequestAPIs;
+    }
+
+    public function addUserRequestAPI(UserRequestAPI $userRequestAPI): self
+    {
+        if (!$this->userRequestAPIs->contains($userRequestAPI)) {
+            $this->userRequestAPIs[] = $userRequestAPI;
+            $userRequestAPI->setUserId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserRequestAPI(UserRequestAPI $userRequestAPI): self
+    {
+        if ($this->userRequestAPIs->removeElement($userRequestAPI)) {
+            // set the owning side to null (unless already changed)
+            if ($userRequestAPI->getUserId() === $this) {
+                $userRequestAPI->setUserId(null);
+            }
+        }
 
         return $this;
     }
