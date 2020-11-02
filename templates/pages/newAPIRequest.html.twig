@@ -1,0 +1,37 @@
+{% extends "base.html.twig" %}
+{% block title %}PostmanLike-NouvelleAPI{% endblock %}
+
+{% block body %}
+
+    <link rel="stylesheet" href="css/newAPIRequest.css">
+    
+    
+    <header>
+        {% include "pages/header.html.twig" %}
+    </header>
+
+    <div id='formController'>
+        {{ form_start(form) }}
+        <div class="form-group">
+            {{ form_label(form.name) }}
+            {{ form_widget(form.name) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.description) }}
+            {{ form_widget(form.description) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.url) }}
+            {{ form_widget(form.url) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.methode) }}
+            {{ form_widget(form.methode) }}
+        </div>
+        
+        <div class ="btn-centered">
+            <button class="btn btn-primary alterbtn">Ajouter</button>
+        </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
