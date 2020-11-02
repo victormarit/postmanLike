@@ -20,6 +20,8 @@ use Symfony\Component\Security\Guard\Authenticator\AbstractFormLoginAuthenticato
 use Symfony\Component\Security\Guard\PasswordAuthenticatedInterface;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
+use Symfony\Component\HttpFoundation\Session\Session;
+
 class UserAuthentificatorAuthenticator extends AbstractFormLoginAuthenticator implements PasswordAuthenticatedInterface
 {
     use TargetPathTrait;
@@ -62,6 +64,8 @@ class UserAuthentificatorAuthenticator extends AbstractFormLoginAuthenticator im
 
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
+        $session = new Session();
+
         $token = new CsrfToken('authenticate', $credentials['csrf_token']);
         if (!$this->csrfTokenManager->isTokenValid($token)) {
             throw new InvalidCsrfTokenException();
@@ -74,6 +78,8 @@ class UserAuthentificatorAuthenticator extends AbstractFormLoginAuthenticator im
             throw new CustomUserMessageAuthenticationException('Email could not be found.');
         }
 
+        $session->set('test', $user);
+        $session->set('isAuth', true);
         return $user;
     }
 

@@ -9,7 +9,11 @@
           <a class="nav-item nav-link ml-2" href="{{ path('homepage') }}">Accueil<span class="sr-only">(current)</span></a>
           <a class="nav-item nav-link ml-2" href="{{ path('newRequest') }}">Nouvelle Requêtes</a>
           <a class="nav-item nav-link ml-2" href="#">Mes resssquêtes</a>
-          <a class="nav-item nav-link ml-2" href="{{ path('app_login') }}">Compte</a>
+          {% if app.session.get('isAuth') %}
+            <a class="nav-item nav-link ml-2" href="{{ path('app_logout') }}">Déconnexion</a>
+          {% else %}
+            <a class="nav-item nav-link ml-2" href="{{ path('app_login') }}">Connexion</a>
+          {% endif %}
         </div>
         </div>
     </div>
