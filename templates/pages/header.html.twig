@@ -3,17 +3,26 @@
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <div class="collapse navbar-collapse " id="navbarNavAltMarkup">
-    <div class="spacing">
-        <div class="navbar-nav">
+  <div class="collapse navbar-collapse " id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
           <a class="nav-item nav-link ml-2" href="{{ path('homepage') }}">Accueil<span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
           <a class="nav-item nav-link ml-2" href="{{ path('newRequest') }}">Nouvelle Requêtes</a>
-          <a class="nav-item nav-link ml-2" href="#">Mes resssquêtes</a>
+          </li>
+          {% if app.session.get('isAuth') %}
+          <li class="nav-item">
+          <a class="nav-item nav-link ml-2" href="#">Mes requêtes</a>
+          </li>
+            {% endif %}
+            <li class="nav-item">
           {% if app.session.get('isAuth') %}
             <a class="nav-item nav-link ml-2" href="{{ path('app_logout') }}">Déconnexion</a>
           {% else %}
             <a class="nav-item nav-link ml-2" href="{{ path('app_login') }}">Connexion</a>
           {% endif %}
+          </li>
         </div>
         </div>
     </div>

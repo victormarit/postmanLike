@@ -17,7 +17,7 @@ class UserRequestController extends AbstractController
     }
 
     /**
-     * @Route("/myRequests", name="homepage")
+     * @Route("/myRequests", name="homepagz") //change le name sinon il a une erreur :)
      */
     public function index()
     {

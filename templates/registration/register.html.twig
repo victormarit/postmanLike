@@ -8,18 +8,41 @@
     {% for flashError in app.flashes('verify_email_error') %}
         <div class="alert alert-danger" role="alert">{{ flashError }}</div>
     {% endfor %}
+ <br /><br />
+     {{ form_start(registrationForm) }}
+    <div align="center">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+					    <div class="col-lg-5">
+                           
+				                <div class="card-body">
+                                    <h1 class="display-7" align="center" >Inscrivez-vous !!</h1>
+                                    <hr class="my-4">
+                                    <div class="form-row">
+                                        <div class="col-md-12 mb-3">
+                                         <div align="center">
+                                            <div class="form-label-group">
+                                               {{ form_row(registrationForm.email, {'attr': {'class': 'form-control'}}) }}
+                                                {{ form_row(registrationForm.firstname, {'attr': {'class': 'form-control'}}) }}
+                                                {{ form_row(registrationForm.lastname, {'attr': {'class': 'form-control'}}) }}
+                                                {{ form_row(registrationForm.plainPassword, {'attr': {'class': 'form-control'}},{
+                                                     label: 'Password'
 
-    <h1>Register</h1>
-
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.firstname) }}
-        {{ form_row(registrationForm.lastname) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
-
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+                                                 }) }}
+                                                {{ form_row(registrationForm.agreeTerms) }}
+                                                    <button type="submit" class="btn btn-primary">Inscription</button>
+                                                {{ form_end(registrationForm) }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>                           
 {% endblock %}
