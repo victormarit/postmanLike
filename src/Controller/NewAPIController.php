@@ -23,23 +23,28 @@ class NewAPIController extends AbstractController
         $this->client = $client;
     }
 
-    public function fetchGitHubInformation(): array
+    public function traitementAPI(): array
     {
+
+        $info = array();
         $response = $this->client->request(
             'GET',
-            'https://cat-fact.herokuapp.com/facts/random?amount=1'
+            'https://cat-fact.herokuapp.com/facts/random?amount=2'
         );
 
         $statusCode = $response->getStatusCode();
+        array_push($info, $statusCode);
         // $statusCode = 200
         $contentType = $response->getHeaders()['content-type'][0];
         // $contentType = 'application/json'
+        array_push($info, $contentType);
         $content = $response->getContent();
         // $content = '{"id":521583, "name":"symfony-docs", ...}'
         $content = $response->toArray();
         // $content = ['id' => 521583, 'name' => 'symfony-docs', ...]
-
-        return $content;
+        array_push($info, $content);
+        dump($info);
+        return $info;
     }
 
     /**
@@ -49,8 +54,7 @@ class NewAPIController extends AbstractController
      */
     public function index(Request $request):Response 
     {
-        $info = $this->fetchGitHubInformation();
-        dump($info);
+        $info = $this->traitementAPI();
 
 
         $API = new API;
@@ -64,7 +68,9 @@ class NewAPIController extends AbstractController
         }
         return $this->render('pages/newAPIRequest.html.twig', [
             "form" => $form->createView(),
-            'code' => $info["text"]
+            'code' => $info[0],
+            'type' => $info[1],
+            'contents' => $info[2]
         ]);
     }
 

@@ -7,9 +7,38 @@
     </header>
 
 
-    <div id='test'>
-        {% for item in requests %}
-            <li>{{ item.id }}</li>
+    {% if APIs|length == 0 %}
+        <p>Vous n'avez pas encore exécuter de requêtes API</p>
+
+    {% else %}
+
+
+
+
+    <div class="album py-5 bg-light">
+        <div class="container">
+        {% for api in APIs %}
+          <div class="row">
+            <div class="col-md-4">
+              <div class="card mb-4 box-shadow">
+                <div class="card-body">
+                    <h3>Nom : {{api["name"]}} </h3>
+                    <p class="card-text"><strong>Description : </strong> {{api["description"]}}</p>
+                    <p class="card-text"><strong>URL : </strong>{{api["url"]}}</p>
+                    <p class="card-text"><strong>Méthode : </strong>{{api["methode"]}}</p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                      <a href="{{ path( 'testAPI',  {'name': api["name"], 'id': api["id"]} ) }}"><input type="button"  class="btn btn-lg btn-primary" value="Tester"></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         {% endfor %}
-    </div>
+
+        </div>
+      </div>
+
+    {% endif %}
 {% endblock %}

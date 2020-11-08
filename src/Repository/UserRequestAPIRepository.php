@@ -25,13 +25,29 @@ class UserRequestAPIRepository extends ServiceEntityRepository
 
     public function findByExampleField($value)
     {
-        $req = $this->createQueryBuilder('u')
-            ->where('u.user_id = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getResult()
-        ;
+        //$req = $this->createQueryBuilder('u')
+        //    ->where('u.user_id = :val')
+        //    ->setParameter('val', $value)
+        //    ->getQuery()
+        //    ->getResult()
+        //;
 
-        return $req;
+        //return $req;
+    }
+
+    public function findUserAPI($id): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+        SELECT api.id, api.name, api.description, api.url, api.methode
+        from user_request_api, user, api 
+        where user_id_id = :identifient;
+        ';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([':identifient' => $id]);
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $stmt->fetchAllAssociative();
     }
 }

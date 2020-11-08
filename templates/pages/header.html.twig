@@ -13,7 +13,7 @@
           </li>
           {% if app.session.get('isAuth') %}
           <li class="nav-item">
-          <a class="nav-item nav-link ml-2" href="#">Mes requêtes</a>
+          <a class="nav-item nav-link ml-2" href="{{ path('userReq') }}">Mes requêtes</a>
           </li>
             {% endif %}
             <li class="nav-item">

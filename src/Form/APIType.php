@@ -29,6 +29,12 @@ class APIType extends AbstractType
                     "class" => "form-control"
                 ]
             ])
+            ->add('header_tokken', TextType::class , [
+                "required" =>false,
+                "attr" => [
+                    "class" => "form-control"
+                ]
+            ])
             ->add('methode', TextType::class, [
                 "attr" => [
                     "class" => "form-control"

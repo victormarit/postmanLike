@@ -38,15 +38,19 @@
                                                     {{ form_widget(form.url) }}
                                                 </div>
                                                 <div class="form-group">
+                                                    {{ form_label(form.header_tokken) }}
+                                                    {{ form_widget(form.header_tokken) }}
+                                                </div>
+                                                <div class="form-group">
                                                     {{ form_label(form.methode) }}
                                                     {{ form_widget(form.methode) }}
                                                 </div>
                                                 <div class ="btn-centered">
-                                                    <button class="btn btn-primary alterbtn">Ajouter</button>
+                                                    <button class="btn btn-primary alterbtn">Tester</button>
                                                     {% if app.session.get('isAuth') %}
                                                     <button class="btn btn-primary alterbtn" >Sauvegarder</button>
                                                     {% else %}
-                                                    <button class="btn btn-primary alterbtn">Connecter vous pour sauvegarder</button>
+                                                    <a href="{{ path('app_login') }}"><input type="button"  class="btn btn-primary alterbtn" value="Connecter vous pour sauvegarder"></a>
                                                     {% endif %}
                                                 </div>
                                                     {{ form_end(form) }}
@@ -58,23 +62,11 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm">
-                    <div class="card-body">
-                            <h1 class="display-7" align="center" >Réponse API : </h1>
-                            <hr class="my-4">
-                            <div class="form-row">
-                                <div class="col-md-12 mb-3">
-                                    <div align="center">
-                                        <div class="form-label-group">
-                                         <div id='test'>
-                                            {{ code }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    {% if code is defined %}
+                        {% include "pages/APIRespond.html.twig" %}
+                    {% else %}
+                        {% include "pages/VoidAPIRespond.html.twig" %}
+                    {% endif %}
                </div>
             </div>
         </div>

@@ -44,6 +44,11 @@ class API
      */
     private $userRequestAPIs;
 
+    /**
+     * @ORM\Column(type="string", length=1000, nullable=true)
+     */
+    private $header_tokken;
+
     public function __construct()
     {
         $this->userRequestAPIs = new ArrayCollection();
@@ -128,6 +133,18 @@ class API
                 $userRequestAPI->setApiId(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getHeaderTokken(): ?string
+    {
+        return $this->header_tokken;
+    }
+
+    public function setHeaderTokken(?string $header_tokken): self
+    {
+        $this->header_tokken = $header_tokken;
 
         return $this;
     }
