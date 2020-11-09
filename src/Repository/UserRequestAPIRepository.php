@@ -41,13 +41,25 @@ class UserRequestAPIRepository extends ServiceEntityRepository
 
         $sql = '
         SELECT api.id, api.name, api.description, api.url, api.methode
-        from user_request_api, user, api 
-        where user_id_id = :identifient;
+        from user_request_api, api 
+        where user_id_id = :identifient
+        and api_id_id = api.id;
         ';
         $stmt = $conn->prepare($sql);
         $stmt->execute([':identifient' => $id]);
 
         // returns an array of arrays (i.e. a raw data set)
         return $stmt->fetchAllAssociative();
+    }
+
+    public function addUserAPI($api_id, $user_id)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+        insert into user_request_api (user_id_id, api_id_id) values (:user, :api)
+        ';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([':user' => $user_id, ':api' => $api_id]);
     }
 }

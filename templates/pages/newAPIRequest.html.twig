@@ -46,7 +46,7 @@
                                                     {{ form_widget(form.methode) }}
                                                 </div>
                                                 <div class ="btn-centered">
-                                                    <button class="btn btn-primary alterbtn">Tester</button>
+                                                    <button class="btn btn-primary alterbtn" name = "testeur">Tester</button>
                                                     {% if app.session.get('isAuth') %}
                                                     <button class="btn btn-primary alterbtn" >Sauvegarder</button>
                                                     {% else %}
