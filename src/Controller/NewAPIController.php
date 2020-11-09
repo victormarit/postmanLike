@@ -26,13 +26,13 @@ class NewAPIController extends AbstractController
         $this->client = $client;
     }
 
-    public function traitementAPI(): array
+    public function traitementAPI($api): array
     {
 
         $info = array();
         $response = $this->client->request(
-            'GET',
-            'https://cat-fact.herokuapp.com/facts/random?amount=2'
+            $api->getMethode(),
+            $api->getUrl()
         );
 
         $statusCode = $response->getStatusCode();
@@ -42,7 +42,6 @@ class NewAPIController extends AbstractController
         $content = $response->getContent();
         $content = $response->toArray();
         array_push($info, $content);
-        dump($info);
         return $info;
     }
 
@@ -58,8 +57,6 @@ class NewAPIController extends AbstractController
      */
     public function index(Request $request):Response 
     {
-        $info = $this->traitementAPI();
-
 
         $session = $request->getSession();
         $user = new User;
@@ -71,8 +68,12 @@ class NewAPIController extends AbstractController
         $form->handleRequest($request);
         if($form->isSubmitted()&& $form->isValid()){
             if(isset($_POST['testeur']))
-            {
-                return $this->render('pages/homepage.html.twig');
+            {                
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($API);
+                $info = $this->traitementAPI($API);
+                dump($info);
+                return $this->render('pages/newAPIRequest.html.twig');
             }
             else{
                 $em = $this->getDoctrine()->getManager();
@@ -84,11 +85,8 @@ class NewAPIController extends AbstractController
             }  
         }
         return $this->render('pages/newAPIRequest.html.twig', [
-            "form" => $form->createView(),
-            'code' => $info[0],
-            'type' => $info[1],
-            'contents' => $info[2]
-        ]);
+            "form" => $form->createView()
+       ]);
     }
 
 
