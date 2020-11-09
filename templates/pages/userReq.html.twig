@@ -30,7 +30,7 @@
                     <div class="btn-group">
                       <a href="{{ path( 'testAPI',  {'name': api["name"], 'id': api["id"]} ) }}"><input type="button"  class="btn btn-lg btn-primary px-2 " value="Tester"></a>
                       <a href="#"><input type="button"  class="btn btn-lg btn-secondary px-2 mx-2" value="Modifier"></a>
-                      <a href="#"><input type="button"  class="btn btn-lg btn-danger px-2" value="Supprimer"></a>
+                      <a href="{{ path( 'delAPI',  {'name': api["name"], 'id': api["id"]} ) }}"><input type="button"  class="btn btn-lg btn-danger px-2" value="Supprimer"></a>
                     </div>
                   </div>
                 </div>

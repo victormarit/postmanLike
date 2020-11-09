@@ -6,9 +6,11 @@ use App\Entity\API;
 use App\Entity\User;
 use App\Repository\UserRequestAPIRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\BrowserKit\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 class UserRequestController extends AbstractController
 {
@@ -73,6 +75,23 @@ class UserRequestController extends AbstractController
         return $this->render('pages/homepage.html.twig');
     }
 
+    /**
+     * @Route("/delAPI/?name={name}&url={id}", name="delAPI") 
+     */
+    public function delAPI($name, $id, Request $request)
+    {
+        $session = $request->getSession();
+        
+        $api = $this->getDoctrine()->getRepository(API::class)->findOneBy(['id' => $id]);
+        $user = new User;
+        $user = $session->get('user');   
+
+        $this->userRepo->delUserAPi($api->getId(),$user->getId());
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($api);
+        $em->flush();
+        return $this->redirectToRoute('userReq');
+    }
 
 
 }

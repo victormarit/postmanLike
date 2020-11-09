@@ -62,4 +62,17 @@ class UserRequestAPIRepository extends ServiceEntityRepository
         $stmt = $conn->prepare($sql);
         $stmt->execute([':user' => $user_id, ':api' => $api_id]);
     }
+
+    public function delUserAPi($api_id, $user_id)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            DELETE FROM user_request_api
+            WHERE user_id_id = :user
+            AND api_id_id = :api
+        ';
+        $stmt = $conn->prepare($sql);
+        $stmt->execute([':user' => $user_id, ':api' => $api_id]);
+    }
 }
