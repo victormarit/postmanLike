@@ -6,6 +6,7 @@ use App\Entity\API;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -35,9 +36,16 @@ class APIType extends AbstractType
                     "class" => "form-control"
                 ]
             ])
-            ->add('methode', TextType::class, [
+            ->add('methode', ChoiceType::class, [
                 "attr" => [
                     "class" => "form-control"
+                ],
+                'choices'  => [
+                    'GET' => 1,
+                    'POST' => 2,
+                    'PUT' => 3,
+                    'DELETE' => 4,
+                    'UPDATE' => 5
                 ]
             ])
         ;
