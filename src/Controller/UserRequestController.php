@@ -55,7 +55,6 @@ class UserRequestController extends AbstractController
             $user = new User;
             $user = $session->get('user');            
             $req = $this->userRepo->findUserAPI($user->getId());
-            dump($req);
 
         }
         return $this->render('pages/userReq.html.twig', [
