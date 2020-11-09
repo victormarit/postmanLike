@@ -41,11 +41,11 @@ class APIType extends AbstractType
                     "class" => "form-control"
                 ],
                 'choices'  => [
-                    'GET' => 1,
-                    'POST' => 2,
-                    'PUT' => 3,
-                    'DELETE' => 4,
-                    'UPDATE' => 5
+                    'GET' => 'GET',
+                    'POST' => 'POST',
+                    'PUT' => 'PUT',
+                    'DELETE' => 'DELETE',
+                    'UPDATE' => 'UPDATE'
                 ]
             ])
         ;

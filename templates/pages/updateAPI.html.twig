@@ -1,0 +1,50 @@
+{% extends "base.html.twig" %}
+{% block title %}Modification API{% endblock %} 
+
+
+{% block body %}
+    <header>
+        {% include "pages/header.html.twig" %}
+    </header>
+    
+    <div class="card-body">
+        <h1 class="display-7" align="center" >Nouvelle requêtes</h1>
+        <hr class="my-4">
+        <div class="form-row">
+            <div class="col-md-12 mb-3">
+                <div align="center">
+                    <div class="form-label-group">
+                        <div id='formController'>
+                            {{ form_start(form) }}
+                            <div class="form-group">
+                                {{ form_label(form.name) }}
+                                {{ form_widget(form.name) }}
+                            </div>
+                            <div class="form-group">
+                                {{ form_label(form.description) }}
+                                {{ form_widget(form.description) }}
+                            </div>
+                            <div class="form-group">
+                                {{ form_label(form.url) }}
+                                {{ form_widget(form.url) }}
+                            </div>
+                            <div class="form-group">
+                                {{ form_label(form.header_tokken) }}
+                                {{ form_widget(form.header_tokken) }}
+                            </div>
+                            <div class="form-group">
+                                {{ form_label(form.methode) }}
+                                {{ form_widget(form.methode) }}
+                            </div>
+                            <div class ="btn-centered">
+                                <button class="btn btn-primary alterbtn" >Sauvegarder</button>
+                            </div>
+                                {{ form_end(form) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

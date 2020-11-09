@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\API;
 use App\Entity\User;
+use App\Form\APIType;
 use App\Repository\UserRequestAPIRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\BrowserKit\Response;
@@ -91,6 +92,29 @@ class UserRequestController extends AbstractController
         $em->remove($api);
         $em->flush();
         return $this->redirectToRoute('userReq');
+    }
+
+
+    /**
+     * @Route("/updateAPI/?name={name}&url={id}", name="updateAPI") 
+     */
+    public function updateAPI($name, $id, Request $request)
+    {
+        $api = $this->getDoctrine()->getRepository(API::class)->findOneBy(['id' => $id]);  
+        $form =  $this->createForm(APIType::class, $api);
+        $form->handleRequest($request, [
+            "form" => $form->createView()
+       ]);
+       if($form->isSubmitted()&& $form->isValid()){
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($api);
+            $em->flush();
+            return $this->redirectToRoute('userReq');
+        } 
+
+        return $this->render('pages/updateAPI.html.twig',[
+            "form" => $form->createView()
+       ]);
     }
 
 
