@@ -23,6 +23,7 @@
                 <div class="card-body">
                     <h3>Nom : {{api["name"]}} </h3>
                     <p class="card-text"><strong>Description : </strong> {{api["description"]}}</p>
+                    {% if api["header_tokken"] is not null %} <p class="card-text"><strong>Header tokken : </strong> {{api["header_tokken"]}}</p>{% endif %}
                     <p class="card-text"><strong>URL : </strong>{{api["url"]}}</p>
                     <p class="card-text"><strong>Méthode : </strong>{{api["methode"]}}</p>
                   <div class="d-flex justify-content-between align-items-center">

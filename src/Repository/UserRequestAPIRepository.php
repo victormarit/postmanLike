@@ -40,7 +40,7 @@ class UserRequestAPIRepository extends ServiceEntityRepository
         $conn = $this->getEntityManager()->getConnection();
 
         $sql = '
-        SELECT api.id, api.name, api.description, api.url, api.methode
+        SELECT api.header_tokken, api.id, api.name, api.description, api.url, api.methode
         from user_request_api, api 
         where user_id_id = :identifient
         and api_id_id = api.id;
