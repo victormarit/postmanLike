@@ -59,10 +59,12 @@ class NewAPIController extends AbstractController
     {
 
         $session = $request->getSession();
-        $user = new User;
-        $user = $session->get('user');            
-        $userID = $user->getId();
-        
+        if($session->get('isAuth'))
+        {
+            $user = new User;
+            $user = $session->get('user');            
+            $userID = $user->getId();
+        }
         $API = new API;
         $form =  $this->createForm(APIType::class, $API);
         $form->handleRequest($request);
@@ -73,7 +75,7 @@ class NewAPIController extends AbstractController
                 $em->persist($API);
                 $info = $this->traitementAPI($API);
                 dump($info);
-                return $this->render('pages/newAPIRequest.html.twig');
+                return $this->render('pages/homepage.html.twig');
             }
             else{
                 $em = $this->getDoctrine()->getManager();

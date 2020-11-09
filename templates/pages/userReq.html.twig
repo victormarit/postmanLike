@@ -28,7 +28,9 @@
                     <p class="card-text"><strong>Méthode : </strong>{{api["methode"]}}</p>
                   <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group">
-                      <a href="{{ path( 'testAPI',  {'name': api["name"], 'id': api["id"]} ) }}"><input type="button"  class="btn btn-lg btn-primary" value="Tester"></a>
+                      <a href="{{ path( 'testAPI',  {'name': api["name"], 'id': api["id"]} ) }}"><input type="button"  class="btn btn-lg btn-primary px-2 " value="Tester"></a>
+                      <a href="#"><input type="button"  class="btn btn-lg btn-secondary px-2 mx-2" value="Modifier"></a>
+                      <a href="#"><input type="button"  class="btn btn-lg btn-danger px-2" value="Supprimer"></a>
                     </div>
                   </div>
                 </div>
