@@ -1,0 +1,13 @@
+{% extends "base.html.twig" %}
+{% block title %}PostmanLike{% endblock %}
+
+{% block body %}
+    <header>
+        {% include "pages/header.html.twig" %}
+    </header>
+
+    {{code}}<br>
+    {{type}}<br>
+    {{ json|replace({'[':'[<div class="ml-2">',']':'</div>]' ,'\n':'<br/>'})|raw }}
+
+{% endblock %}

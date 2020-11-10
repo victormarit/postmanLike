@@ -38,10 +38,12 @@ class UserRequestController extends AbstractController
         $contentType = $response->getHeaders()['content-type'][0];
         array_push($info, $contentType);
         $content = $response->getContent();
-        $content = $response->toArray();
+        $content = json_decode($content);
+        $content = json_encode($content, JSON_PRETTY_PRINT);
         array_push($info, $content);
         return $info;
     }
+
 
     /**
      * @Route("/myRequests", name="userReq") //change le name sinon il a une erreur :)
@@ -70,9 +72,13 @@ class UserRequestController extends AbstractController
     {
         $api = $this->getDoctrine()->getRepository(API::class)->findOneBy(['id' => $id]);
         $info = $this->resultAPI($api->getUrl(), $api->getMethode());
-        dump($api->getUrl());
         dump($info);
-        return $this->render('pages/homepage.html.twig');
+        
+        return $this->render('pages/apiTesteur.html.twig', [
+            'code' => $info[0],
+            'type' => $info[1],
+            'json' => $info[2]
+        ]);
     }
 
     /**
