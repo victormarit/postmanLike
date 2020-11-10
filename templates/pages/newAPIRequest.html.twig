@@ -84,10 +84,19 @@
                                 <div class="col-md-12 mb-3">
                                     <div align="left">
                                         <div class="form-label-group api">
-
+ <style>
+                                                .my-custom-scrollbar {
+position: relative;
+height: 400px;
+overflow: auto;
+}
+.table-wrapper-scroll-y {
+display: block;
+}
+                                                </style>
                                                 <h2>Status Code : </h2>{{code}}<br/>
                                                 <h2>Type de contenu : </h2>{{type}}<br/>
-                                                <h2>Contenu : </h2></br>{{ json|replace({'[':'[<div class="ml-4">',']':'</div>]', '{':'{<div class="ml-4">','}':'</div>}' ,'\n':'<br/>'})|raw }}
+                                                <h2>Contenu : </h2><div class="table-wrapper-scroll-y my-custom-scrollbar"  ></br>{{ json|replace({'[':'[<div class="ml-4">',']':'</div>]', '{':'{<div class="ml-4">','}':'</div>}' ,'\n':'<br/>'})|raw }}
                                             
                                         </div>
                                     </div>
