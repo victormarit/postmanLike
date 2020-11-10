@@ -1,19 +1,24 @@
 {% extends "base.html.twig" %}
 {% block title %}PostmanLike{% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="css/homepage.css">
+{% endblock %}
+
 {% block body %}
     <header>
         {% include "pages/header.html.twig" %}
     </header>
+    <main>
+        <h1>Tester vos API</h1>
+        <p>Application web développée dans le cadre du module symfony B2 EPSI </p>
 
-    <h1>Tester vos API</h1>
-    <p>Application web développée dans le cadre du module symfony B2 EPSI </p>
-
-    <h2>Composition du groupe</h2>
-    <ul>
-        <li>Victor Marit</li>
-        <li>Nathan Lemaitre</li>
-        <li>Geoffrey Lepingle</li>
-    </ul>
+        <h2>Composition du groupe</h2>
+        <ul>
+            <li>Victor Marit</li>
+            <li>Nathan Lemaitre</li>
+            <li>Geoffrey Lepingle</li>
+        </ul>
+    </main>
 
 {% endblock %}
