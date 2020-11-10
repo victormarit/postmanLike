@@ -35,14 +35,17 @@ class NewAPIController extends AbstractController
             $api->getUrl()
         );
 
+
         $statusCode = $response->getStatusCode();
         array_push($info, $statusCode);
         $contentType = $response->getHeaders()['content-type'][0];
         array_push($info, $contentType);
         $content = $response->getContent();
-        $content = $response->toArray();
+        $content = json_decode($content);
+        $content = json_encode($content, JSON_PRETTY_PRINT);
         array_push($info, $content);
         return $info;
+
     }
 
     public function addUserRequestAPI($API_id, $UserID)
@@ -75,7 +78,12 @@ class NewAPIController extends AbstractController
                 $em->persist($API);
                 $info = $this->traitementAPI($API);
                 dump($info);
-                return $this->render('pages/homepage.html.twig');
+                return $this->render('pages/newAPIRequest.html.twig', [
+                    "form" => $form->createView(),
+                    'code' => $info[0],
+                    'type' => $info[1],
+                    'json' => $info[2]
+                ]);
             }
             else{
                 $em = $this->getDoctrine()->getManager();

@@ -3,7 +3,7 @@
 
 {% block body %}
 
-    <link rel="stylesheet" href="css/newAPIRequest.css">
+    <link rel="stylesheet" href="css/newAPI.css">
     
     
     <header>
@@ -62,12 +62,45 @@
                             </div>
                         </div>
                     </div>
-                    {% if code is defined %}
-                        {% include "pages/APIRespond.html.twig" %}
-                    {% else %}
+
+
+
+
+
+
+
+
+
+
+                    {% if code is not defined %}
                         {% include "pages/VoidAPIRespond.html.twig" %}
+                    {% else %}
+
+                    <div class="col-sm">
+                        <div class="card-body">
+                            <h1 class="display-7" align="center" >Réponse API</h1>
+                            <hr class="my-4">
+                            <div class="form-row">
+                                <div class="col-md-12 mb-3">
+                                    <div align="left">
+                                        <div class="form-label-group api">
+
+                                                <h2>Status Code : </h2>{{code}}<br/>
+                                                <h2>Type de contenu : </h2>{{type}}<br/>
+                                                <h2>Contenu : </h2></br>{{ json|replace({'[':'[<div class="ml-4">',']':'</div>]', '{':'{<div class="ml-4">','}':'</div>}' ,'\n':'<br/>'})|raw }}
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     {% endif %}
-               </div>
+
+
+
+                </div>
             </div>
         </div>
      </div>
