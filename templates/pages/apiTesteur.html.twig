@@ -8,6 +8,6 @@
 
     {{code}}<br>
     {{type}}<br>
-    {{ json|replace({'[':'[<div class="ml-2">',']':'</div>]' ,'\n':'<br/>'})|raw }}
+    {{ json|replace({'[':'[<div class="ml-3">',']':'</div>]', '{':'{<div class="ml-3">','}':'</div>}' ,'\n':'<br/>'})|raw }}
 
 {% endblock %}
