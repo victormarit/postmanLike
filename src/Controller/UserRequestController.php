@@ -12,36 +12,56 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Component\HttpFoundation\Request;
-
 class UserRequestController extends AbstractController
 {
-
-    
-
     public function __construct(UserRequestAPIRepository $userRepo, HttpClientInterface $client)
     {
         $this->userRepo = $userRepo;
         $this->client = $client;
     }
 
-    public function resultAPI($url, $methode): array
+    public function resultAPI($API): array
     {
+        if(!is_null($API->getHeaderTokken()))
+        {
+            $info = array();
+            $response = $this->client->request(
+                $API->getMethode(),
+                $API->getUrl(),
+                [
+                    "headers" => [
+                        "token" => $API->getHeaderTokken()
+                    ]
+                ]
+            );
+        }
+        else
+        {
+            $info = array();
+            $response = $this->client->request(
+                $API->getMethode(),
+                $API->getUrl()
+            );
+        }
 
-        $info = array();
-        $response = $this->client->request(
-            $methode,
-            $url
-        );
 
         $statusCode = $response->getStatusCode();
         array_push($info, $statusCode);
-        $contentType = $response->getHeaders()['content-type'][0];
-        array_push($info, $contentType);
-        $content = $response->getContent();
-        $content = json_decode($content);
-        $content = json_encode($content, JSON_PRETTY_PRINT);
-        array_push($info, $content);
-        return $info;
+        if($statusCode<=300)
+        {
+            $contentType = $response->getHeaders()['content-type'][0];
+            array_push($info, $contentType);
+            $content = $response->getContent();
+            $content = json_decode($content);
+            $content = json_encode($content, JSON_PRETTY_PRINT);
+            array_push($info, $content);
+            return $info;
+        }
+        else{
+            array_push($info, "Aucun contenu retourné");
+            array_push($info, "Erreur modifier les paramètre de votre api");
+            return $info;
+        }
     }
 
 
@@ -71,14 +91,15 @@ class UserRequestController extends AbstractController
     public function testAPI($name, $id)
     {
         $api = $this->getDoctrine()->getRepository(API::class)->findOneBy(['id' => $id]);
-        $info = $this->resultAPI($api->getUrl(), $api->getMethode());
-        dump($info);
-        
+        $info = $this->resultAPI($api);
+
         return $this->render('pages/apiTesteur.html.twig', [
             'code' => $info[0],
             'type' => $info[1],
             'json' => $info[2]
         ]);
+
+
     }
 
     /**

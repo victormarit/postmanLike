@@ -43,7 +43,8 @@ class UserRequestAPIRepository extends ServiceEntityRepository
         SELECT api.header_tokken, api.id, api.name, api.description, api.url, api.methode
         from user_request_api, api 
         where user_id_id = :identifient
-        and api_id_id = api.id;
+        and api_id_id = api.id
+        ORDER BY api.id DESC;
         ';
         $stmt = $conn->prepare($sql);
         $stmt->execute([':identifient' => $id]);
