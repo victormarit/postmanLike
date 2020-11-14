@@ -11,41 +11,193 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Session;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Symfony\Component\HttpClient\CurlHttpClient;
 
 
 class NewAPIController extends AbstractController
 {
 
-    private $client;
-
-    public function __construct(HttpClientInterface $client, UserRequestAPIRepository $userRepo)
+    public function __construct(UserRequestAPIRepository $userRepo)
     {
         $this->userRepo = $userRepo;
-        $this->client = $client;
     }
 
-    public function traitementAPI($api): array
+    public function traitementAPI($api)
     {
+        $curl = new CurlHttpClient();
+        $curl=curl_init($api->getUrl());
 
-        $info = array();
-        $response = $this->client->request(
-            $api->getMethode(),
-            $api->getUrl()
-        );
+        switch ($api->getMethode()) {
+            
+            case 'GET':
+                if($api->getHeaderTokken())
+                {
+                    $header=$api->getHeaderTokken();
+                    $value = explode(",", $header);
+        
+                    curl_setopt_array($curl, [
+                        CURLOPT_SSL_VERIFYPEER => false,
+                        CURLOPT_RETURNTRANSFER => true,
+                        CURLOPT_HTTPHEADER => $value
+            
+                    ]);
+                }
+                else
+                {
+                    curl_setopt_array($curl, [
+                        CURLOPT_SSL_VERIFYPEER => false,
+                        CURLOPT_RETURNTRANSFER => true
+            
+                    ]);  
+                }
+                break;
+
+            case 'POST':
+                if($api->getHeaderTokken())
+                {
+        
+                    $header=$api->getHeaderTokken();
+                    $value = explode(",", $header);
+                    $valueBody=$api->getBody();
+                    $body = explode(",", $valueBody);
+        
+                    curl_setopt_array($curl, [
+                        CURLOPT_SSL_VERIFYPEER => false,
+                        CURLOPT_RETURNTRANSFER => true,
+                        CURLOPT_HTTPHEADER => $value,
+                        CURLOPT_POSTFIELDS => $body
+            
+                    ]);
+                }
+                else
+                {
+                    $value=$api->getBody();
+                    $body = explode(",", $value);
+                    curl_setopt_array($curl, [
+                        CURLOPT_SSL_VERIFYPEER => false,
+                        CURLOPT_RETURNTRANSFER => true,
+                        CURLOPT_POSTFIELDS => $body
+            
+                    ]);
+                }
+                break;
+
+            case 'DELETE':
+                if($api->getHeaderTokken())
+                {
+        
+                    $header=$api->getHeaderTokken();
+                    $value = explode(",", $header);
+                    $valueBody=$api->getBody();
+                    $body = explode(",", $valueBody);
+        
+                    curl_setopt_array($curl, [
+                        CURLOPT_SSL_VERIFYPEER => false,
+                        CURLOPT_RETURNTRANSFER => true,
+                        CURLOPT_HTTPHEADER => $value,
+                        CURLOPT_POSTFIELDS => $body,
+                        CURLOPT_CUSTOMREQUEST => "DELETE"
+            
+                    ]);
+                }
+                else
+                {
+                    $value=$api->getBody();
+                    $body = explode(",", $value);
+                    curl_setopt_array($curl, [
+                        CURLOPT_SSL_VERIFYPEER => false,
+                        CURLOPT_RETURNTRANSFER => true,
+                        CURLOPT_POSTFIELDS => $body,
+                        CURLOPT_CUSTOMREQUEST => "DELETE"
+            
+                    ]);
+                }
+                break;
+
+            case 'PUT':
+                if($api->getHeaderTokken())
+                {
+            
+                    $header=$api->getHeaderTokken();
+                    $value = explode(",", $header);
+                    $valueBody=$api->getBody();
+                    $body = explode(",", $valueBody);
+            
+                    curl_setopt_array($curl, [
+                        CURLOPT_SSL_VERIFYPEER => false,
+                        CURLOPT_RETURNTRANSFER => true,
+                        CURLOPT_HTTPHEADER => $value,
+                        CURLOPT_POSTFIELDS => $body,
+                        CURLOPT_CUSTOMREQUEST => "DELETE"
+            
+                    ]);
+                }
+                else
+                {
+                    $value=$api->getBody();
+                    $body = explode(",", $value);
+                    curl_setopt_array($curl, [
+                        CURLOPT_SSL_VERIFYPEER => false,
+                        CURLOPT_RETURNTRANSFER => true,
+                        CURLOPT_POSTFIELDS => $body,
+                        CURLOPT_CUSTOMREQUEST => "PUT"
+            
+                    ]);
+                }
+                break;
+            case 'UPDATE':
+                if($api->getHeaderTokken())
+                {
+        
+                    $header=$api->getHeaderTokken();
+                    $value = explode(",", $header);
+                    $valueBody=$api->getBody();
+                    $body = explode(",", $valueBody);
+        
+                    curl_setopt_array($curl, [
+                        CURLOPT_SSL_VERIFYPEER => false,
+                        CURLOPT_RETURNTRANSFER => true,
+                        CURLOPT_HTTPHEADER => $value,
+                        CURLOPT_POSTFIELDS => $body,
+                        CURLOPT_CUSTOMREQUEST => "DELETE"
+            
+                    ]);
+                }
+                else
+                {
+                    $value=$api->getBody();
+                    $body = explode(",", $value);
+                    curl_setopt_array($curl, [
+                        CURLOPT_SSL_VERIFYPEER => false,
+                        CURLOPT_RETURNTRANSFER => true,
+                        CURLOPT_POSTFIELDS => $body,
+                        CURLOPT_CUSTOMREQUEST => "UPDATE"
+            
+                    ]);
+                }
+                break;
+        } 
 
 
-        $statusCode = $response->getStatusCode();
-        array_push($info, $statusCode);
-        $contentType = $response->getHeaders()['content-type'][0];
-        array_push($info, $contentType);
-        $content = $response->getContent();
-        $content = json_decode($content);
-        $content = json_encode($content, JSON_PRETTY_PRINT);
-        array_push($info, $content);
-        return $info;
-
+        $data = curl_exec($curl);
+        
+        if(!$data)
+        {
+            $statusCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+            $error = curl_error($curl);
+            curl_close($curl);
+            return [$statusCode, 'Aucun', $error];
+        }
+        else
+        {
+            $statusCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+            $contentType = curl_getinfo($curl, CURLINFO_CONTENT_TYPE);
+            $data = json_decode($data);
+            $data = json_encode($data, JSON_PRETTY_PRINT);
+            curl_close($curl);
+            return [$statusCode, $contentType , $data];
+        
+        }
     }
 
     public function addUserRequestAPI($API_id, $UserID)
@@ -77,7 +229,6 @@ class NewAPIController extends AbstractController
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($API);
                 $info = $this->traitementAPI($API);
-                dump($info);
                 return $this->render('pages/newAPIRequest.html.twig', [
                     "form" => $form->createView(),
                     'code' => $info[0],
