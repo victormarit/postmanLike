@@ -35,14 +35,14 @@ class APIType extends AbstractType
                 "required" =>false,
                 "attr" => [
                     "class" => "form-control",
-                    'placeholder' => "key1: value, key2: value ..."
+                    'placeholder' => "Clé: valeur, clé: valeur ..."
                 ]
             ])
             ->add('body', TextareaType::class , [
                 "required" =>false,
                 "attr" => [
                     "class" => "form-control",
-                    'placeholder' => "key1: value,\nkey2: value ..."
+                    'placeholder' => "Clé: valeur,\nClé: valeur ..."
                 ]
             ])
             ->add('methode', ChoiceType::class, [
