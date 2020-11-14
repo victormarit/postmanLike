@@ -16,6 +16,7 @@ class APIType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
+                "label" => "Nom",
                 "attr" => [
                     "class" => "form-control"
                 ]
@@ -46,6 +47,7 @@ class APIType extends AbstractType
                 "attr" => [
                     "class" => "form-control"
                 ],
+                "label" => 'Méthode',
                 'choices'  => [
                     'GET' => 'GET',
                     'POST' => 'POST',
