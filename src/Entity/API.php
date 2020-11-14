@@ -47,7 +47,7 @@ class API
     /**
      * @ORM\Column(type="string", length=1000, nullable=true)
      */
-    private $header_tokken;
+    private $header;
 
     /**
      * @ORM\Column(type="string", length=1000, nullable=true)
@@ -142,14 +142,14 @@ class API
         return $this;
     }
 
-    public function getHeaderTokken(): ?string
+    public function getHeader(): ?string
     {
-        return $this->header_tokken;
+        return $this->header;
     }
 
-    public function setHeaderTokken(?string $header_tokken): self
+    public function setHeader(?string $header): self
     {
-        $this->header_tokken = $header_tokken;
+        $this->header = $header;
 
         return $this;
     }

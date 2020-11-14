@@ -31,9 +31,9 @@ class UserRequestController extends AbstractController
         switch ($api->getMethode()) {
             
             case 'GET':
-                if($api->getHeaderTokken())
+                if($api->getHeader())
                 {
-                    $header=$api->getHeaderTokken();
+                    $header=$api->getHeader();
                     $value = explode(",", $header);
         
                     curl_setopt_array($curl, [
@@ -54,10 +54,10 @@ class UserRequestController extends AbstractController
                 break;
 
             case 'POST':
-                if($api->getHeaderTokken())
+                if($api->getHeader())
                 {
         
-                    $header=$api->getHeaderTokken();
+                    $header=$api->getHeader();
                     $value = explode(",", $header);
                     $valueBody=$api->getBody();
                     $body = explode(",", $valueBody);
@@ -84,10 +84,10 @@ class UserRequestController extends AbstractController
                 break;
 
             case 'DELETE':
-                if($api->getHeaderTokken())
+                if($api->getHeader())
                 {
         
-                    $header=$api->getHeaderTokken();
+                    $header=$api->getHeader();
                     $value = explode(",", $header);
                     $valueBody=$api->getBody();
                     $body = explode(",", $valueBody);
@@ -116,10 +116,10 @@ class UserRequestController extends AbstractController
                 break;
 
             case 'PUT':
-                if($api->getHeaderTokken())
+                if($api->getHeader())
                 {
             
-                    $header=$api->getHeaderTokken();
+                    $header=$api->getHeader();
                     $value = explode(",", $header);
                     $valueBody=$api->getBody();
                     $body = explode(",", $valueBody);
@@ -147,10 +147,10 @@ class UserRequestController extends AbstractController
                 }
                 break;
             case 'UPDATE':
-                if($api->getHeaderTokken())
+                if($api->getHeader())
                 {
         
-                    $header=$api->getHeaderTokken();
+                    $header=$api->getHeader();
                     $value = explode(",", $header);
                     $valueBody=$api->getBody();
                     $body = explode(",", $valueBody);
