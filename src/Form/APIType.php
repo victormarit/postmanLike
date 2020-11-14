@@ -36,6 +36,12 @@ class APIType extends AbstractType
                     "class" => "form-control"
                 ]
             ])
+            ->add('body', TextareaType::class , [
+                "required" =>false,
+                "attr" => [
+                    "class" => "form-control"
+                ]
+            ])
             ->add('methode', ChoiceType::class, [
                 "attr" => [
                     "class" => "form-control"
