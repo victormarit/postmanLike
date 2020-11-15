@@ -1,12 +1,12 @@
-#api{
+.api{
     margin: 3em;
 }
-#api h1 {
+.api h1 {
     display: inline;
     font-size: larger;
     font-weight: bold;
 }
-#retourBTN{
+.retourBTN{
     display: flex;
     flex-direction: row;
     justify-content: center;

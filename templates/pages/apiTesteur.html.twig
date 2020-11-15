@@ -1,9 +1,9 @@
 {% extends "base.html.twig" %}
-{% block title %}PostmanLike{% endblock %}
+{% block title %}PostmanLike - Resultat API{% endblock %}
 
 
 {% block stylesheets %}
-    <link rel="stylesheet" href="css/apiTesteur.css">
+    <link rel="stylesheet" href="../css/apiTesteur.css">
 {% endblock %}
 
 {% block body %}
@@ -12,12 +12,12 @@
     </header>
 
 
-    <div id="api">
+    <div class="api">
         <h1>Status Code : </h1>{{code}}<br/>
         <h1>Type de contenu : </h1>{{type}}<br/>
         <h1>Contenu : </h1></br>{{ json|replace({'[':'[<div class="ml-3">',']':'</div>]', '{':'{<div class="ml-3">','}':'</div>}' ,'\n':'<br/>'})|raw }}
         <br/>
-        <div id='retourBTN'>
+        <div class='retourBTN'>
             <a href="{{ path('userReq') }}"><input type="button"  class="btn btn-lg btn-primary" value="Retour"></a>
         </div>
         
