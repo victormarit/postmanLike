@@ -223,7 +223,7 @@ class UserRequestController extends AbstractController
 
 
     /**
-     * @Route("/?name={name}&url={id}", name="testAPI") 
+     * @Route("/testAPI/?name={name}&url={id}", name="testAPI") 
      */
     public function testAPI($name, $id)
     {

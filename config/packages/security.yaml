@@ -37,3 +37,7 @@ security:
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/myRequests, roles: ROLE_USER }
+        - { path: "^/testAPI", roles: ROLE_USER }  
+        - { path: "^/delAPI", roles: ROLE_USER } 
+        - { path: "^/updateAPI", roles: ROLE_USER } 
