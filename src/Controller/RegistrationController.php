@@ -12,6 +12,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 
+use Symfony\Component\HttpFoundation\Session\Session;
+
 class RegistrationController extends AbstractController
 {
     /**
@@ -36,6 +38,10 @@ class RegistrationController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
             // do anything else you need here, like send an email
+            $session = new Session();
+            $session->set('user', $user);
+            $session->set('isAuth', true);
+
 
             return $guardHandler->authenticateUserAndHandleSuccess(
                 $user,
